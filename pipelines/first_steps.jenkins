@@ -1,0 +1,20 @@
+#!groovy
+// Check kruptor properties
+properties([disableConcurrentBuilds()])
+pipeline {
+    agent {
+        label 'master'
+    }
+    options {
+        // Храним логи и артефакты из последних 10 сборок
+        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+        timestamps()
+    }
+    stages {
+        stage("Preparations") {
+            steps {
+                sh 'ssh kruptor@192.168.0.3 \'hostname\''
+            }
+        }
+    }
+}
