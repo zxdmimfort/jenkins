@@ -2,8 +2,7 @@
 // Check kruptor properties
 properties([disableConcurrentBuilds()])
 pipeline {
-    agent{
-    }
+    agent any
     options {
         // Храним логи и артефакты из последних 10 сборок
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
