@@ -14,5 +14,9 @@ pipeline {
                 sh 'ssh kruptor@192.168.0.3 \'hostname\''
             }
         }
+        stage("Second step") {
+            steps {
+                sh 'ssh kruptor@192.168.0.3 \'uptime\''
+            }
     }
 }
