@@ -3,20 +3,19 @@
 properties([disableConcurrentBuilds()])
 pipeline {
     agent any
+    triggers { pollSCM('* * * * *') }
     options {
         // Храним логи и артефакты из последних 10 сборок
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
         timestamps()
     }
     stages {
-        stage("Preparations") {
+        stage("create docker image") {
             steps {
-                sh 'ssh kruptor@192.168.0.3 \'hostname\''
-            }
-        }
-        stage("Second step") {
-            steps {
-                sh 'ssh kruptor@192.168.0.3 \'uptime\''
+                echo "=========== start building image ==========="
+                dir ('docker/toolbox') {
+                    sh 'docker build .'
+                }
             }
         }
     }
